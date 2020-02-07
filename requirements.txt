@@ -1,4 +1,0 @@
-# install this first -> pip install opencv-python==4.1.2.30
-robotpy-cscore==2019.1.0
-pynetworktables==2020.0.1
-pyntcore==2020.1.2.3
