@@ -376,11 +376,10 @@ public final class Main {
           if (midY > maxMidY) {
             maxMidY = midY;
           }
-
-          ntinst.getTable("contourPoints").getEntry("maxArea").setDouble(maxArea);
-          ntinst.getTable("contourPoints").getEntry("midPointX").setDouble(maxMidX);
-          ntinst.getTable("contourPoints").getEntry("midPointY").setDouble(maxMidY);
         }
+        // ntinst.getTable("contourPoints").getEntry("maxArea").setDouble(maxArea);
+        // ntinst.getTable("contourPoints").getEntry("midPointX").setDouble(maxMidX);
+        // ntinst.getTable("contourPoints").getEntry("midPointY").setDouble(maxMidY);
       });
 
       visionThread.start();
