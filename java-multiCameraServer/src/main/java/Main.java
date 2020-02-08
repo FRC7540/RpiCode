@@ -357,13 +357,12 @@ public final class Main {
             }
           }
 
-          Point maxMid = new Point(0,0);
-          double maxArea = Double.NEGATIVE_INFINITY;
-
+          double maxMidX = Double.NEGATIVE_INFINITY;
+          double maxMidY = Double.NEGATIVE_INFINITY;
           double midX = (MaxX + MinX)/2;
           double midY = (MaxY + MinY)/2;
-          Point midPoint = new Point(midX, midY);
 
+          double maxArea = Double.NEGATIVE_INFINITY;
           double lenght = MaxY - MinY;
           double width = MaxX - MinX;
           double area = lenght * width;
@@ -371,12 +370,17 @@ public final class Main {
           if (area > maxArea) {
             maxArea = area;
           }
-          if (midPoint > maxMid) {
-            maxMid = midPoint;
+          if (midX > maxMidX) {
+            maxMidX = midX;
           }
-        }
+          if (midY > maxMidY) {
+            maxMidY = midY;
+          }
 
-        //ntinst.getTable("contourPoints").getEntry("MaxX").setDouble();
+          ntinst.getTable("contourPoints").getEntry("maxArea").setDouble(maxArea);
+          ntinst.getTable("contourPoints").getEntry("midPointX").setDouble(maxMidX);
+          ntinst.getTable("contourPoints").getEntry("midPointY").setDouble(maxMidY);
+        }
       });
 
       visionThread.start();
