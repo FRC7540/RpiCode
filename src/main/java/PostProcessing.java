@@ -10,29 +10,28 @@ public final class PostProcessing {
         double maxMidY = Double.NEGATIVE_INFINITY;
         double maxArea = Double.NEGATIVE_INFINITY;
 
-        double[] targetData = new double[] {maxMidX, maxMidY, maxArea};
-
+        
         for (MatOfPoint contour : results) {
             Point[] points = contour.toArray();
-
+            
             Double MaxX = Double.NEGATIVE_INFINITY;
             Double MinX = Double.POSITIVE_INFINITY;
             Double MaxY = Double.NEGATIVE_INFINITY;
             Double MinY = Double.POSITIVE_INFINITY;
-
+            
             for (int i = 0; i < points.length; i++) {
                 Point point = points[i];
-
+                
                 double x = point.x;
                 double y = point.y;
-
+                
                 if (x > MaxX) {
                     MaxX = x;
                 }
                 if (x < MinX) {
                     MinX = x;
                 }
-
+                
                 if (y > MaxY) {
                     MaxY = y;
                 }
@@ -40,14 +39,14 @@ public final class PostProcessing {
                     MinY = y;
                 }
             }
-
+            
             double midX = (MaxX + MinX) / 2;
             double midY = (MaxY + MinY) / 2;
-
+            
             double lenght = MaxY - MinY;
             double width = MaxX - MinX;
             double area = lenght * width;
-
+            
             if (area > maxArea) {
                 maxArea = area;
             }
@@ -58,7 +57,8 @@ public final class PostProcessing {
                 maxMidY = midY;
             }
         }
-
+        
+        double[] targetData = new double[] {maxMidX, maxMidY, maxArea};
         return targetData;
     }
 }
