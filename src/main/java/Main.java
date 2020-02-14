@@ -20,6 +20,8 @@ import com.google.gson.JsonParser;
 
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
+import org.opencv.imgproc.*;
+import org.opencv.core.*;
 
 import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
@@ -328,58 +330,17 @@ public final class Main {
         // do something with pipeline results
         ArrayList<MatOfPoint> results = pipeline.filterContoursOutput();
         
-        for (MatOfPoint contour : results) {
-          Point[] points = contour.toArray();
+        MatOfPoint contour = results.get(0);
 
-          Double MaxX = Double.NEGATIVE_INFINITY;
-          Double MinX = Double.POSITIVE_INFINITY;
-          Double MaxY = Double.NEGATIVE_INFINITY;
-          Double MinY = Double.POSITIVE_INFINITY;
+        final Rect bb = Imgproc.boundingRect(contour);
 
-          for (int i = 0; i < points.length; i++) {
-            Point point = points[i];
+        double midX = bb.x + bb.width/2;
+        double midY = bb.y + bb.height;
+        double area = bb.width * bb.height;
 
-            double x = point.x;
-            double y = point.y;
-
-            if (x > MaxX) {
-              MaxX = x;
-            }
-            if (x < MinX) {
-              MinX = x;
-            }
-
-            if (y > MaxY) {
-              MaxY = y;
-            }
-            if (y < MinY) {
-              MinY = y;
-            }
-          }
-
-          double maxMidX = Double.NEGATIVE_INFINITY;
-          double maxMidY = Double.NEGATIVE_INFINITY;
-          double midX = (MaxX + MinX)/2;
-          double midY = (MaxY + MaxY)/2;
-
-          double maxArea = Double.NEGATIVE_INFINITY;
-          double lenght = MaxY - MinY;
-          double width = MaxX - MinX;
-          double area = lenght * width;
-
-          if (area > maxArea) {
-            maxArea = area;
-          }
-          if (midX > maxMidX) {
-            maxMidX = midX;
-          }
-          if (midY > maxMidY) {
-            maxMidY = midY;
-          }
-        }
-        // ntinst.getTable("contourPoints").getEntry("maxArea").setDouble(maxArea);
-        // ntinst.getTable("contourPoints").getEntry("midPointX").setDouble(maxMidX);
-        // ntinst.getTable("contourPoints").getEntry("midPointY").setDouble(maxMidY);
+        ntinst.getTable("contourPoints").getEntry("maxArea").setDouble(midX);
+        ntinst.getTable("contourPoints").getEntry("midPointX").setDouble(midY);
+        ntinst.getTable("contourPoints").getEntry("midPointY").setDouble(area);
       });
 
       visionThread.start();
