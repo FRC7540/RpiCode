@@ -329,17 +329,24 @@ public final class Main {
         // do something with pipeline results
         ArrayList<MatOfPoint> results = pipeline.filterContoursOutput();
         
+        if (results.size() == 0) {
+          ntinst.getTable("contourPoints").getEntry("area").setDouble(-1);
+          ntinst.getTable("contourPoints").getEntry("midPointX").setDouble(-1);
+          ntinst.getTable("contourPoints").getEntry("midPointY").setDouble(-1);
+          return;
+        }
+        
         MatOfPoint contour = results.get(0);
-
+        
         final Rect bb = Imgproc.boundingRect(contour);
 
         double midX = bb.x + bb.width/2;
         double midY = bb.y + bb.height;
         double area = bb.width * bb.height;
 
-        ntinst.getTable("contourPoints").getEntry("area").setDouble(midX);
-        ntinst.getTable("contourPoints").getEntry("midPointX").setDouble(midY);
-        ntinst.getTable("contourPoints").getEntry("midPointY").setDouble(area);
+        ntinst.getTable("contourPoints").getEntry("area").setDouble(area);
+        ntinst.getTable("contourPoints").getEntry("midPointX").setDouble(midX);
+        ntinst.getTable("contourPoints").getEntry("midPointY").setDouble(midY);
       });
 
       visionThread.start();
