@@ -337,7 +337,7 @@ public final class Main {
         double midY = bb.y + bb.height;
         double area = bb.width * bb.height;
 
-        ntinst.getTable("contourPoints").getEntry("maxArea").setDouble(midX);
+        ntinst.getTable("contourPoints").getEntry("area").setDouble(midX);
         ntinst.getTable("contourPoints").getEntry("midPointX").setDouble(midY);
         ntinst.getTable("contourPoints").getEntry("midPointY").setDouble(area);
       });
