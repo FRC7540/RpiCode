@@ -19,7 +19,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import org.opencv.core.MatOfPoint;
-import org.opencv.core.Point;
 import org.opencv.imgproc.*;
 import org.opencv.core.*;
 
