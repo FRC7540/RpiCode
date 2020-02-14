@@ -360,7 +360,7 @@ public final class Main {
           double maxMidX = Double.NEGATIVE_INFINITY;
           double maxMidY = Double.NEGATIVE_INFINITY;
           double midX = (MaxX + MinX)/2;
-          double midY = (MaxY + MinY)/2;
+          double midY = (MaxY + MaxY)/2;
 
           double maxArea = Double.NEGATIVE_INFINITY;
           double lenght = MaxY - MinY;
