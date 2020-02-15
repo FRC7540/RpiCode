@@ -329,9 +329,7 @@ public final class Main {
       VisionThread visionThread = new VisionThread(cameras.get(0),
               new GripPipeline(), pipeline -> {
         // do something with pipeline results
-                JsonObject topConfig = cameraConfigs.get(0).config;
-                JsonArray camerasConfigArr = topConfig.get("cameras").getAsJsonArray();
-                JsonObject camera0Config = camerasConfigArr.get(0).getAsJsonObject();
+                JsonObject camera0Config = cameraConfigs.get(0).config;
                 int width = camera0Config.get("width").getAsNumber().intValue();
                 int height = camera0Config.get("height").getAsNumber().intValue();
 
@@ -350,14 +348,14 @@ public final class Main {
         double midY = bb.y + bb.height;
         double area = bb.width * bb.height;
 
-        double finalmidX = (midX * (2/width)) - 1;
-        double finalmidY = (midY * (2/height)) - 1;
+        double finalmidX = (midX * 2 / width) - 1;
+        double finalmidY = (midY * 2 / height) - 1;
 
         ntinst.getTable("contourPoints").getEntry("area").setDouble(area);
         ntinst.getTable("contourPoints").getEntry("midPointX").setDouble(finalmidX);
         ntinst.getTable("contourPoints").getEntry("midPointY").setDouble(finalmidY);
         ntinst.getTable("contourPoints").getEntry("resultsCheck").setBoolean(true);
-
+ 
         System.out.println("x: " + finalmidX + ", y: " + finalmidY + " area: " + area); 
       });
 
