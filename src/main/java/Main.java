@@ -329,15 +329,19 @@ public final class Main {
       VisionThread visionThread = new VisionThread(cameras.get(0),
               new GripPipeline(), pipeline -> {
         // do something with pipeline results
+                JsonObject topConfig = cameraConfigs.get(0).config;
+                JsonArray camerasConfigArr = topConfig.get("cameras").getAsJsonArray();
+                JsonObject camera0Config = camerasConfigArr.get(0).getAsJsonObject();
+                int width = camera0Config.get("width").getAsNumber().intValue();
+                int height = camera0Config.get("height").getAsNumber().intValue();
+
         ArrayList<MatOfPoint> results = pipeline.filterContoursOutput();
         
         if (results.size() == 0) {
-          ntinst.getTable("contourPoints").getEntry("area").setDouble(-1);
-          ntinst.getTable("contourPoints").getEntry("midPointX").setDouble(-1);
-          ntinst.getTable("contourPoints").getEntry("midPointY").setDouble(-1);
+          ntinst.getTable("contourPoints").getEntry("resultsCheck").setBoolean(false);
           return;
         }
-        
+
         MatOfPoint contour = results.get(0);
         
         final Rect bb = Imgproc.boundingRect(contour);
@@ -346,11 +350,15 @@ public final class Main {
         double midY = bb.y + bb.height;
         double area = bb.width * bb.height;
 
-        ntinst.getTable("contourPoints").getEntry("area").setDouble(area);
-        ntinst.getTable("contourPoints").getEntry("midPointX").setDouble(midX);
-        ntinst.getTable("contourPoints").getEntry("midPointY").setDouble(midY);
+        double finalmidX = (midX * (2/width)) - 1;
+        double finalmidY = (midY * (2/height)) - 1;
 
-        System.out.println("x: " + midX + ", y: " + midY + " area: " + area); 
+        ntinst.getTable("contourPoints").getEntry("area").setDouble(area);
+        ntinst.getTable("contourPoints").getEntry("midPointX").setDouble(finalmidX);
+        ntinst.getTable("contourPoints").getEntry("midPointY").setDouble(finalmidY);
+        ntinst.getTable("contourPoints").getEntry("resultsCheck").setBoolean(true);
+
+        System.out.println("x: " + finalmidX + ", y: " + finalmidY + " area: " + area); 
       });
 
       visionThread.start();
