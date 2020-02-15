@@ -307,6 +307,7 @@ public final class Main {
     }
 
     // start cameras
+    System.out.println("starting cameras...");
     for (CameraConfig config : cameraConfigs) {
       cameras.add(startCamera(config));
     }
@@ -324,6 +325,7 @@ public final class Main {
       });
        */
     if (cameras.size() >= 1) {
+      System.out.println("starting vision thread");
       VisionThread visionThread = new VisionThread(cameras.get(0),
               new GripPipeline(), pipeline -> {
         // do something with pipeline results
@@ -347,6 +349,8 @@ public final class Main {
         ntinst.getTable("contourPoints").getEntry("area").setDouble(area);
         ntinst.getTable("contourPoints").getEntry("midPointX").setDouble(midX);
         ntinst.getTable("contourPoints").getEntry("midPointY").setDouble(midY);
+
+        System.out.println("x: " + midX + ", y: " + midY + " area: " + area); 
       });
 
       visionThread.start();
