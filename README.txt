@@ -35,3 +35,11 @@ Building locally on rPi
 2) Run "./install.sh" (replaces /home/pi/runCamera)
 3) Run "./runInteractive" in /home/pi or "sudo svc -t /service/camera" to
    restart service.
+   
+=========================
+Persisten Camera Settings
+=========================
+
+1. set camera settings to desired values on pi
+2. open .json settings file
+3. copy content and paste into camera custom settings
