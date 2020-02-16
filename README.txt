@@ -37,7 +37,7 @@ Building locally on rPi
    restart service.
    
 =========================
-Persisten Camera Settings
+Persistent Camera Settings
 =========================
 
 1. set camera settings to desired values on pi
