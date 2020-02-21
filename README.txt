@@ -43,3 +43,6 @@ Persistent Camera Settings
 1. set camera settings to desired values on pi
 2. open .json settings file
 3. copy content and paste into camera custom settings
+
+Camera settings
+white balance: 0 exposure: 15 auto-white-balance: 0
